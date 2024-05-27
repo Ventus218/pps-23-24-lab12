@@ -48,4 +48,6 @@ foldright([H|T], Fold, Init, O) :-
 % where Mapper = mapper(I, O, UNARY_OP)
 % e.g. Mapper = mapper(X, Y, Y is X+1)
 map_2(L, M, LO) :-
-	foldright(L, folder(A, B, FO = .... , FO), LO).
+	foldright(L, folder(A, B, (copy_term(M, mapper(B, MappedB, OP)), once(OP), FO = [MappedB|A], FO)), [], LO).
+
+	
