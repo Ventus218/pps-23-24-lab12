@@ -35,3 +35,11 @@ foldleft([H|T], Fold, Init, O) :-
 	copy_term(Fold, folder(Init, H, F, OF)),
 	once(F),
 	foldleft(T, Fold, OF, O).
+
+% foldright(+L, +Folder, +Init, -O)
+% where Folder = folder(I1, I2, F, O)
+foldright([], _, Init, Init).
+foldright([H|T], Fold, Init, O) :-
+	foldright(T, Fold, Init, FR),
+	copy_term(Fold, folder(FR, H, F, O)),
+	once(F).
