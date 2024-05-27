@@ -27,3 +27,11 @@ reduce([A,B|T], Red, O) :-
 	copy_term(Red, reducer(A, B, R, OR)),
 	once(R),
 	reduce([OR|T], Red, O).
+
+% foldLeft(+L, +Folder, +Init, -O)
+% where Folder = folder(I1, I2, F, O)
+foldleft([], Fold, Init, Init).
+foldleft([H|T], Fold, Init, O) :-
+	copy_term(Fold, folder(Init, H, F, OF)),
+	once(F),
+	foldleft(T, Fold, OF, O).
