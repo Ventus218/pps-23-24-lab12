@@ -47,22 +47,10 @@ foldright([H|T], Fold, Init, O) :-
 % map_2(+L, +Mapper, -Lo)
 % where Mapper = mapper(I, O, UNARY_OP)
 % e.g. Mapper = mapper(X, Y, Y is X+1)
-map_2(L, mapper(B, MappedB, OP), LO) :-
-	foldright(L, folder(A, B, OP, [MappedB|A]), [], LO).
+map_2(L, mapper(B, MappedB, OP), LO) :- foldright(L, folder(A, B, OP, [MappedB|A]), [], LO).
 
 % filter_2(+L, +Predicate, -LO)
 % where Predicate = predicate(I, P)
-filter_2(L, predicate(B, P), LO) :-
-	foldright(
-		L,
-		folder(
-			A,
-			B,
-			once(filter_2_helper(A, B, P, FO)),
-			FO
-		),
-		[],
-		LO).
-
+filter_2(L, predicate(B, P), LO) :- foldright(L, folder(A, B, filter_2_helper(A,B,P, FO), FO), [], LO).
 filter_2_helper(A, B, P, [B|A]) :- once(P), !.
 filter_2_helper(A, B, _, A).
