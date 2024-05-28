@@ -59,4 +59,19 @@ map_2(L, mapper(B, MappedB, OP), LO) :-
 		[], % Init
 		LO).
 
-	
+% filter_2(+L, +Predicate, -LO)
+% where Predicate = predicate(I, P)
+filter_2(L, predicate(B, P), LO) :-
+	foldright(
+		L,
+		folder(
+			A,
+			B,
+			once(filter_2_helper(A, B, P, FO)),
+			FO
+		),
+		[],
+		LO).
+
+filter_2_helper(A, B, P, [B|A]) :- once(P), !.
+filter_2_helper(A, B, _, A).
