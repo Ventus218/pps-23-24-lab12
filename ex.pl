@@ -54,3 +54,7 @@ map_2(L, mapper(B, MappedB, OP), LO) :- foldright(L, folder(A, B, OP, [MappedB|A
 filter_2(L, predicate(B, P), LO) :- foldright(L, folder(A, B, filter_2_helper(A,B,P, FO), FO), [], LO).
 filter_2_helper(A, B, P, [B|A]) :- once(P), !.
 filter_2_helper(A, B, _, A).
+
+% reduce_2(+L, +Reducer, -O)
+% where Reducer = reducer(I1, I2, R, O)
+reduce_2([H|T], reducer(A, B, R, RO), O) :- foldleft(T, folder(A, B, R, RO), H, O).
