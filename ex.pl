@@ -48,16 +48,7 @@ foldright([H|T], Fold, Init, O) :-
 % where Mapper = mapper(I, O, UNARY_OP)
 % e.g. Mapper = mapper(X, Y, Y is X+1)
 map_2(L, mapper(B, MappedB, OP), LO) :-
-	foldright(
-		L,
-		folder(
-			A, % I1
-			B, % I2
-			(once(OP), FO = [MappedB|A]), % Folding strategy
-			FO % folding output
-		),
-		[], % Init
-		LO).
+	foldright(L, folder(A, B, OP, [MappedB|A]), [], LO).
 
 % filter_2(+L, +Predicate, -LO)
 % where Predicate = predicate(I, P)
